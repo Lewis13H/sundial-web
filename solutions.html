@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solutions - Sundial Protocol</title>
+    <style>
+        :root {
+            --primary-navy: #0A1628;
+            --primary-blue: #1E3A8A;
+            --secondary-gold: #F59E0B;
+            --accent-green: #10B981;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+            color: var(--gray-900);
+            line-height: 1.6;
+            background-color: #FFFFFF;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation (Same as homepage) */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-navy);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.2s;
+        }
+
+        .logo:hover {
+            transform: translateX(2px);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--secondary-gold) 0%, #F59E0B 100%);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a.active {
+            color: var(--primary-navy);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-gold);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--primary-blue) 100%);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 14px rgba(30, 58, 138, 0.2);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 58, 138, 0.3);
+        }
+
+        /* Hero Section */
+        .page-hero {
+            padding: 100px 0 80px;
+            background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .page-hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .page-hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--primary-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-hero p {
+            font-size: 22px;
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* Solutions Overview */
+        .solutions-overview {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 80px;
+        }
+
+        .solution-card {
+            padding: 48px;
+            background: white;
+            border-radius: 20px;
+            border: 1px solid var(--gray-100);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-gold) 0%, var(--primary-blue) 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            border-color: transparent;
+        }
+
+        .solution-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .solution-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(30, 58, 138, 0.1) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-bottom: 32px;
+        }
+
+        .solution-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 16px;
+        }
+
+        .solution-description {
+            font-size: 18px;
+            color: var(--gray-600);
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+
+        .solution-features {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .solution-features li {
+            padding: 12px 0;
+            color: var(--gray-700);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 16px;
+        }
+
+        .solution-features li::before {
+            content: '';
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--accent-green) 0%, #059669 100%);
+            border-radius: 50%;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .solution-features li::after {
+            content: '✓';
+            position: absolute;
+            left: 12px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .solution-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .solution-cta:hover {
+            gap: 12px;
+            color: var(--primary-navy);
+        }
+
+        .solution-cta::after {
+            content: '→';
+            transition: transform 0.3s;
+        }
+
+        /* Feature Deep Dive */
+        .feature-section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .feature-section:nth-child(even) {
+            background: var(--gray-50);
+        }
+
+        .feature-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            align-items: center;
+        }
+
+        .feature-section:nth-child(even) .feature-content {
+            direction: rtl;
+        }
+
+        .feature-section:nth-child(even) .feature-text {
+            direction: ltr;
+        }
+
+        .feature-text h2 {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--primary-navy);
+            margin-bottom: 28px;
+            line-height: 1.2;
+        }
+
+        .feature-text p {
+            font-size: 19px;
+            color: var(--gray-600);
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .feature-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-bottom: 40px;
+        }
+
+        .stat-item {
+            padding: 24px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .feature-visual {
+            background: white;
+            border-radius: 24px;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visual-placeholder {
+            font-size: 18px;
+            color: var(--gray-400);
+            text-align: center;
+        }
+
+        /* Integration Partners */
+        .integrations {
+            padding: 100px 0;
+            background: white;
+            text-align: center;
+        }
+
+        .integrations h3 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--gray-700);
+            margin-bottom: 60px;
+        }
+
+        .integration-logos {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .integration-logo {
+            width: 160px;
+            height: 80px;
+            background: var(--gray-100);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--gray-400);
+            transition: all 0.3s;
+        }
+
+        .integration-logo:hover {
+            background: var(--gray-50);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            color: var(--primary-navy);
+        }
+
+        /* CTA Section */
+        .solutions-cta {
+            padding: 120px 0;
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--primary-blue) 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solutions-cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .solutions-cta h2 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 24px;
+        }
+
+        .solutions-cta p {
+            font-size: 22px;
+            margin-bottom: 48px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            background: white;
+            color: var(--primary-navy);
+            padding: 20px 48px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .cta-button-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-button-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Footer (Same as homepage) */
+        footer {
+            padding: 80px 0 40px;
+            background: var(--gray-900);
+            color: white;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 80px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand .logo {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand p {
+            color: var(--gray-400);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .footer-links h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: white;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 16px;
+        }
+
+        .footer-links a {
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 16px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-legal a {
+            color: var(--gray-500);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-legal a:hover {
+            color: var(--gray-300);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .page-hero h1 {
+                font-size: 36px;
+            }
+            
+            .solutions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+            
+            .feature-section:nth-child(even) .feature-content {
+                direction: ltr;
+            }
+            
+            .feature-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <a href="file:///C:/Users/lewis/OneDrive/Documents/1_Code/sundial-web/index.html" class="logo">
+                    <div class="logo-icon"></div>
+                    Sundial Protocol
+                </a>
+                <div class="nav-links">
+                    <a href="file:///C:/Users/lewis/OneDrive/Documents/1_Code/sundial-web/solutions.html" class="active">Solutions</a>
+                    <a href="file:///C:/Users/lewis/OneDrive/Documents/1_Code/sundial-web/technology.html">Technology</a>
+                    <a href="/company">Company</a>
+                    <a href="/resources">Resources</a>
+                    <a href="/contact" class="nav-cta">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-hero-content">
+                <h1>Enterprise Bitcoin Solutions</h1>
+                <p>Unlock the full potential of Bitcoin holdings with institutional-grade infrastructure designed for yield generation, treasury management, and seamless integration</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Overview -->
+    <section class="solutions-overview">
+        <div class="container">
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <div class="solution-icon">💰</div>
+                    <h3 class="solution-title">Institutional Yield</h3>
+                    <p class="solution-description">Generate sustainable returns on Bitcoin holdings without sacrificing custody or security through our non-custodial staking infrastructure.</p>
+                    <ul class="solution-features">
+                        <li>2-5% sustainable APY</li>
+                        <li>Non-custodial architecture</li>
+                        <li>Slashing protection</li>
+                        <li>Automated compounding</li>
+                    </ul>
+                    <a href="#yield" class="solution-cta">Learn more</a>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">🏦</div>
+                    <h3 class="solution-title">Treasury Management</h3>
+                    <p class="solution-description">Deploy corporate Bitcoin reserves into secure, yield-generating strategies with enterprise-grade reporting and compliance.</p>
+                    <ul class="solution-features">
+                        <li>Corporate treasury optimization</li>
+                        <li>Risk-managed strategies</li>
+                        <li>Audit-ready reporting</li>
+                        <li>Multi-sig support</li>
+                    </ul>
+                    <a href="#treasury" class="solution-cta">Learn more</a>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">🔧</div>
+                    <h3 class="solution-title">Enterprise SDK</h3>
+                    <p class="solution-description">White-label infrastructure with plug-and-play modules for custody platforms, exchanges, and financial institutions.</p>
+                    <ul class="solution-features">
+                        <li>RESTful APIs</li>
+                        <li>WebSocket streams</li>
+                        <li>Compliance modules</li>
+                        <li>24/7 SLA support</li>
+                    </ul>
+                    <a href="#sdk" class="solution-cta">Learn more</a>
+                </div>
+
+                <div class="solution-card">
+                    <div class="solution-icon">📊</div>
+                    <h3 class="solution-title">Market Making</h3>
+                    <p class="solution-description">Provide deep liquidity for Bitcoin and UTXO assets with institutional-grade market making infrastructure.</p>
+                    <ul class="solution-features">
+                        <li>Cross-chain liquidity</li>
+                        <li>Automated rebalancing</li>
+                        <li>MEV protection</li>
+                        <li>Volume incentives</li>
+                    </ul>
+                    <a href="#market-making" class="solution-cta">Learn more</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Institutional Yield Deep Dive -->
+    <section class="feature-section" id="yield">
+        <div class="container">
+            <div class="feature-content">
+                <div class="feature-text">
+                    <h2>Non-Custodial Bitcoin Yield</h2>
+                    <p>Sundial's revolutionary staking mechanism allows Bitcoin holders to earn yield without transferring custody. Your keys remain yours while participating in network security and earning rewards.</p>
+                    
+                    <div class="feature-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">2-5%</div>
+                            <div class="stat-label">Sustainable APY</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">100%</div>
+                            <div class="stat-label">Non-Custodial</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">$100M+</div>
+                            <div class="stat-label">BTC Committed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">0%</div>
+                            <div class="stat-label">Bridge Risk</div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="cta-button" style="background: var(--primary-navy); color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; display: inline-block;">
+                        Calculate Your Yield →
+                    </a>
+                </div>
+                
+                <div class="feature-visual">
+                    <div class="visual-placeholder">
+                        [Yield Generation Diagram]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Treasury Management Deep Dive -->
+    <section class="feature-section" id="treasury">
+        <div class="container">
+            <div class="feature-content">
+                <div class="feature-text">
+                    <h2>Corporate Treasury Solutions</h2>
+                    <p>Following the MicroStrategy playbook? Put your Bitcoin reserves to work with institutional-grade infrastructure designed for corporate treasuries. Generate yield while maintaining full custody and compliance.</p>
+                    
+                    <div class="feature-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">SOC-2</div>
+                            <div class="stat-label">Compliance Ready</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">24/7</div>
+                            <div class="stat-label">Monitoring</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">Multi-sig</div>
+                            <div class="stat-label">Security</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">Real-time</div>
+                            <div class="stat-label">Reporting</div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="cta-button" style="background: var(--primary-navy); color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; display: inline-block;">
+                        Schedule Treasury Demo →
+                    </a>
+                </div>
+                
+                <div class="feature-visual">
+                    <div class="visual-placeholder">
+                        [Treasury Dashboard Mockup]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SDK Deep Dive -->
+    <section class="feature-section" id="sdk">
+        <div class="container">
+            <div class="feature-content">
+                <div class="feature-text">
+                    <h2>Enterprise Integration SDK</h2>
+                    <p>Seamlessly integrate Bitcoin yield generation into your existing infrastructure. Our white-label SDK provides everything needed for custodians, exchanges, and financial platforms to offer Bitcoin staking services.</p>
+                    
+                    <div class="feature-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">&lt;50ms</div>
+                            <div class="stat-label">API Latency</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">99.99%</div>
+                            <div class="stat-label">Uptime SLA</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">REST+WS</div>
+                            <div class="stat-label">API Types</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">24/7</div>
+                            <div class="stat-label">Support</div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="cta-button" style="background: var(--primary-navy); color: white; padding: 16px 32px; text-decoration: none; border-radius: 8px; display: inline-block;">
+                        View Documentation →
+                    </a>
+                </div>
+                
+                <div class="feature-visual">
+                    <div class="visual-placeholder">
+                        [SDK Code Example]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integration Partners -->
+    <section class="integrations">
+        <div class="container">
+            <h3>Trusted by Leading Platforms</h3>
+            <div class="integration-logos">
+                <div class="integration-logo">Custody Platform</div>
+                <div class="integration-logo">Exchange</div>
+                <div class="integration-logo">Asset Manager</div>
+                <div class="integration-logo">Treasury Platform</div>
+                <div class="integration-logo">Lending Desk</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="solutions-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Transform Your Bitcoin Strategy?</h2>
+                <p>Join leading institutions leveraging Sundial's infrastructure for secure Bitcoin yield generation</p>
+                <div class="cta-buttons">
+                    <a href="#" class="cta-button">Schedule Consultation</a>
+                    <a href="#" class="cta-button cta-button-secondary">Download One-Pager</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="file:///C:/Users/lewis/OneDrive/Documents/1_Code/sundial-web/index.html" class="logo">
+                        <div class="logo-icon"></div>
+                        Sundial Protocol
+                    </a>
+                    <p>The institutional-grade Layer 2 infrastructure for Bitcoin yield generation and UTXO-based DeFi.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Solutions</h4>
+                    <ul>
+                        <li><a href="#yield">Institutional Yield</a></li>
+                        <li><a href="#treasury">Treasury Management</a></li>
+                        <li><a href="#sdk">Enterprise SDK</a></li>
+                        <li><a href="#market-making">Market Making</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/partners">Partners</a></li>
+                        <li><a href="/careers">Careers</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="/docs">Documentation</a></li>
+                        <li><a href="/whitepaper">Whitepaper</a></li>
+                        <li><a href="/security">Security Audits</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <a href="/privacy">Privacy Policy</a>
+                    <a href="/terms">Terms of Service</a>
+                    <a href="/compliance">Compliance</a>
+                </div>
+                <p style="color: var(--gray-500); font-size: 14px;">© 2025 Sundial Protocol. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
